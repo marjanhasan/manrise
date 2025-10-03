@@ -11,10 +11,10 @@ export default function Header() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   return (
-    <header>
-      <nav className="sticky top-0 z-40 shadow-md">
+    <>
+      <nav className="bg-accent sticky top-0 z-40 shadow-md">
         {/* Larger Screen Menu */}
-        <div className="relative z-40 mx-auto hidden h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:flex lg:px-8 2xl:h-20">
+        <div className="mx-auto hidden h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:flex lg:px-8 2xl:h-20">
           {/* Left Side */}
           <div>
             <Link href={"/"} className="mr-4">
@@ -69,7 +69,7 @@ export default function Header() {
         </div>
 
         {/* Small Screen Menu */}
-        <div className="relative flex items-center justify-between p-4 lg:hidden">
+        <div className="flex items-center justify-between p-4 lg:hidden">
           {/* Menu Button */}
           <button className="" onClick={() => setIsMenuOpen(true)}>
             <Menu />
@@ -213,6 +213,6 @@ export default function Header() {
         )}
         {/* Wishlist Sidebar End */}
       </nav>
-    </header>
+    </>
   );
 }
