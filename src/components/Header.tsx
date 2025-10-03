@@ -2,11 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { AiOutlineUser } from "react-icons/ai";
-import { BsCart3 } from "react-icons/bs";
-import { ImCross } from "react-icons/im";
-import { IoMenu } from "react-icons/io5";
-import { IoMdHeartEmpty } from "react-icons/io";
+import { Heart, Menu, X, ShoppingCart, UserRound } from "lucide-react";
 import logo from "../../public/ManRise.png";
 
 export default function Header() {
@@ -40,12 +36,12 @@ export default function Header() {
           {/* Right Side: Icons & Search */}
           <div className="flex items-center space-x-4">
             {/* Cart Icon */}
-            <BsCart3
+            <ShoppingCart
               className="h-6 w-6 cursor-pointer"
               onClick={() => setIsCartOpen(true)}
             />
             {/* Wishlist Icon */}
-            <IoMdHeartEmpty
+            <Heart
               className="h-6 w-6 cursor-pointer"
               onClick={() => setIsWishlistOpen(true)}
             />
@@ -56,7 +52,7 @@ export default function Header() {
               onMouseLeave={() => setIsUserDropdownOpen(false)}
             >
               <button className="cursor-pointer">
-                <AiOutlineUser className="h-6 w-6" />
+                <UserRound className="h-6 w-6" />
               </button>
               {isUserDropdownOpen && (
                 <div className="bg-sidebar absolute top-2 right-0 z-50 mt-2 w-48 rounded-md py-1 shadow-lg">
@@ -76,7 +72,7 @@ export default function Header() {
         <div className="relative flex items-center justify-between p-4 lg:hidden">
           {/* Menu Button */}
           <button className="" onClick={() => setIsMenuOpen(true)}>
-            <IoMenu />
+            <Menu />
           </button>
           {/* Brand Logo */}
           <Link href={"/"} className="flex-shrink-0 cursor-pointer">
@@ -90,7 +86,7 @@ export default function Header() {
           </Link>
           {/* Cart Icon */}
           <button onClick={() => setIsCartOpen(true)}>
-            <BsCart3 className="h-6 w-6" />
+            <ShoppingCart className="h-6 w-6" />
           </button>
         </div>
 
@@ -105,7 +101,7 @@ export default function Header() {
               onClick={() => setIsMenuOpen(false)}
               className="absolute top-4 right-4"
             >
-              <ImCross className="h-4 w-4" />
+              <X />
             </button>
             <ul className="space-y-2">
               <li>
@@ -152,7 +148,7 @@ export default function Header() {
               onClick={() => setIsCartOpen(false)}
               className="absolute top-4 right-4 cursor-pointer"
             >
-              <ImCross className="h-4 w-4" />
+              <X />
             </button>
             <ul className="space-y-2">
               <li className="mb-4 text-lg font-bold">Shopping Cart</li>
@@ -190,7 +186,7 @@ export default function Header() {
               onClick={() => setIsWishlistOpen(false)}
               className="absolute top-4 right-4 cursor-pointer"
             >
-              <ImCross className="h-4 w-4" />
+              <X />
             </button>
             <ul className="space-y-2">
               <li className="mb-4 text-lg font-bold">Wishlist</li>
