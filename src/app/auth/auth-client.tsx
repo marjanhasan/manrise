@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 export default function AuthClientPage() {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -55,7 +56,7 @@ export default function AuthClientPage() {
   };
 
   return (
-    <div className="bg-background dark min-h-screen">
+    <div className="bg-background min-h-screen">
       <div className="flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center">
@@ -249,6 +250,12 @@ export default function AuthClientPage() {
                 ? "Don't have an account? Sign up"
                 : "Already have an account? Sign in"}
             </button>
+            <Link
+              className="text-primary hover:text-popover-foreground mt-1 block cursor-pointer text-sm font-medium transition-colors"
+              href="/"
+            >
+              Go back to home
+            </Link>
           </div>
         </div>
       </div>

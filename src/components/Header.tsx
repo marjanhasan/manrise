@@ -56,12 +56,9 @@ export default function Header() {
               </button>
               {isUserDropdownOpen && (
                 <div className="bg-sidebar absolute top-2 right-0 z-50 mt-2 w-48 rounded-md py-1 shadow-lg">
-                  <a href="/login" className="block px-4 py-2 text-sm">
-                    Login
-                  </a>
-                  <a href="/register" className="block px-4 py-2 text-sm">
-                    Register
-                  </a>
+                  <Link href="/auth" className="block px-4 py-2 text-sm">
+                    Login/Register
+                  </Link>
                 </div>
               )}
             </div>
