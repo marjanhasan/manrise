@@ -1,4 +1,4 @@
-import { ButtonGroupSize } from "@/components/ButtonGroupMobile";
+import { ButtonGroupMobile } from "@/components/ButtonGroupMobile";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 
@@ -12,7 +12,7 @@ export default function MainLayout({
       <Header />
       <main>{children}</main>
       <Footer />
-      <ButtonGroupSize />
+      <ButtonGroupMobile />
     </div>
   );
 }

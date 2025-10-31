@@ -12,30 +12,32 @@ const serviceData = [
   {
     id: 2,
     icon: <TbTruckReturn />,
-    title: "EASY RETURN POLICY!",
+    title: "Easy Return Policy!",
   },
   {
     id: 3,
     icon: <MdOutlineWorkspacePremium />,
-    title: "PREMIUM QUALITY PRODUCT!",
+    title: "Premium Quality Product!",
   },
   {
     id: 4,
     icon: <RiCustomerService2Line />,
-    title: "ONLINE SUPPORT 24/7!",
+    title: "Online Support 24/7!",
   },
 ];
 
 export default function ServiceSection() {
   return (
-    <section className="mb-[1px] grid grid-cols-2 gap-[1px] lg:grid-cols-4">
+    <section className="grid grid-cols-2 gap-4 bg-[#f9f9f9] px-4 py-12 lg:grid-cols-4 lg:gap-6">
       {serviceData.map((service) => (
         <div
           key={service.id}
-          className="flex flex-col items-center bg-[#282828] px-4 py-12 text-center"
+          className="flex flex-col items-center justify-center rounded-2xl bg-white p-6 text-center shadow-sm transition-transform duration-300 hover:scale-[1.03]"
         >
-          {service.icon}
-          <h2 className="text-lg text-white uppercase md:text-xl">
+          <div className="mb-3 text-3xl text-gray-500 sm:text-4xl lg:text-5xl">
+            {service.icon}
+          </div>
+          <h2 className="text-sm font-medium text-gray-700 uppercase sm:text-base md:text-lg lg:text-xl">
             {service.title}
           </h2>
         </div>

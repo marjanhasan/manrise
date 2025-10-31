@@ -1,11 +1,11 @@
 "use client";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { Star } from "lucide-react";
 import { useState } from "react";
 
 interface ProductCardProps {
-  imageFront: string;
-  imageBack: string;
+  imageFront: string | StaticImageData;
+  imageBack: string | StaticImageData;
   title: string;
   code: string;
   price: number;
@@ -81,7 +81,7 @@ export default function ProductCard({
         </div>
 
         {/* Add To Cart */}
-        <button className="mt-1.5 w-full rounded-lg bg-gray-100 py-[clamp(6px,0.7vw,8px)] text-[clamp(11px,1vw,13px)] font-medium text-gray-800 transition hover:bg-gray-200">
+        <button className="mt-1.5 w-full cursor-pointer rounded-md bg-white px-4 py-[clamp(6px,0.7vw,8px)] text-[clamp(11px,1vw,13px)] font-semibold text-gray-800 shadow-md transition-all duration-300 hover:bg-gradient-to-tr hover:from-gray-700 hover:via-gray-500 hover:to-gray-700 hover:text-white hover:shadow-[0_0_15px_#00000033,0_0_25px_#00000022]">
           Add To Cart
         </button>
       </div>

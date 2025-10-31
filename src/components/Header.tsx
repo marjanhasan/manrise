@@ -16,12 +16,21 @@ export default function Header() {
         {/* Larger Screen Menu */}
         <div className="mx-auto hidden h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:flex lg:px-8 2xl:h-20">
           {/* Left Side */}
-          <div>
-            <Link href={"/"} className="mr-4">
+          <div className="flex gap-4">
+            <Link
+              href={"/"}
+              className="relative font-medium transition-colors before:absolute before:-bottom-1 before:left-0 before:h-[2px] before:w-0 before:bg-gray-900 before:transition-all hover:text-gray-900 hover:before:w-full"
+            >
               Home
             </Link>
-            <Link href={"/collections"}>Collections</Link>
+            <Link
+              href={"/collections"}
+              className="relative font-medium transition-colors before:absolute before:-bottom-1 before:left-0 before:h-[2px] before:w-0 before:bg-gray-900 before:transition-all hover:text-gray-900 hover:before:w-full"
+            >
+              Collections
+            </Link>
           </div>
+
           {/* Center: Brand Logo */}
           <Link href={"/"} className="flex-shrink-0 cursor-pointer">
             <Image

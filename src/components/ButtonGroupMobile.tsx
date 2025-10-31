@@ -1,13 +1,4 @@
 import { Heart, House, Menu, Search, ShoppingCart } from "lucide-react";
-
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 const navigationMenuItems = [
@@ -18,29 +9,22 @@ const navigationMenuItems = [
   { title: "Wishlist", href: "#settings", icon: Heart },
 ];
 
-export function ButtonGroupSize() {
+export function ButtonGroupMobile() {
   return (
-    <nav className="sticky bottom-0 mx-auto w-fit md:hidden">
-      <NavigationMenu>
-        <NavigationMenuList>
-          {navigationMenuItems.map((item) => (
-            <NavigationMenuItem key={item.title}>
-              <NavigationMenuLink
-                className={cn(
-                  navigationMenuTriggerStyle(),
-                  "flex h-auto flex-col items-center px-2 py-2.5",
-                )}
-                asChild
-              >
-                <Link href={item.href}>
-                  <item.icon />
-                  {item.title}
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          ))}
-        </NavigationMenuList>
-      </NavigationMenu>
+    <nav className="shadow-t fixed bottom-0 z-50 w-full bg-white/90 backdrop-blur-md md:hidden">
+      <ul className="flex w-full items-center justify-around">
+        {navigationMenuItems.map((item) => (
+          <li key={item.title} className="flex-1">
+            <Link
+              href={item.href}
+              className="flex flex-col items-center justify-center py-2 text-gray-700 transition-colors duration-200 hover:text-yellow-600"
+            >
+              <item.icon className="h-6 w-6 sm:h-7 sm:w-7" />
+              <span className="mt-1 text-xs sm:text-sm">{item.title}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </nav>
   );
 }
