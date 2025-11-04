@@ -22,7 +22,7 @@ export default function UserMenu() {
       </IconButton>
 
       <div
-        className={`bg-sidebar absolute top-2 right-0 z-50 mt-2 w-48 rounded-md py-1 shadow-lg transition-opacity ${
+        className={`bg-sidebar absolute top-4 right-0 z-50 mt-2 w-48 rounded-md py-1 shadow-lg transition-opacity ${
           open ? "visible opacity-100" : "invisible opacity-0"
         }`}
         role="menu"
