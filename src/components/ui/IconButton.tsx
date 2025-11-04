@@ -10,7 +10,7 @@ const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
       ref={ref}
       type="button"
       className={clsx(
-        "inline-flex items-center justify-center rounded-md p-2 hover:bg-black/5 focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 focus:outline-none",
+        "inline-flex cursor-pointer items-center justify-center rounded-md bg-transparent p-2",
         className,
       )}
       {...props}
