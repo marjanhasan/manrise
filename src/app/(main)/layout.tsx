@@ -1,6 +1,6 @@
 import { ButtonGroupMobile } from "@/components/ButtonGroupMobile";
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import Header from "@/components/Header/Header";
 import MessengerButton from "@/components/MessengerButton";
 
 export default function MainLayout({
