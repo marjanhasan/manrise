@@ -8,6 +8,8 @@ const PAGE_USERNAME = "manrisebd";
 export default function MessengerButton() {
   const [menuOpen, setMenuOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const firstItemRef = useRef<HTMLButtonElement>(null);
 
   const openBrowserChat = useCallback(() => {
     const ua = navigator.userAgent.toLowerCase();
@@ -29,7 +31,7 @@ export default function MessengerButton() {
 
   const toggleMenu = useCallback(() => setMenuOpen((p) => !p), []);
 
-  // Close on Escape
+  // Close on Escape + focus management
   useEffect(() => {
     if (!menuOpen) return;
     const onKey = (e: KeyboardEvent) => {
@@ -39,15 +41,25 @@ export default function MessengerButton() {
     return () => window.removeEventListener("keydown", onKey);
   }, [menuOpen]);
 
+  // Move focus into menu on open; return to trigger on close
+  useEffect(() => {
+    if (menuOpen) {
+      // tiny delay to ensure element exists
+      requestAnimationFrame(() => firstItemRef.current?.focus());
+    } else {
+      triggerRef.current?.focus();
+    }
+  }, [menuOpen]);
+
   return (
     <>
-      {/* Backdrop: ensures outside clicks close even over iframes/banners */}
+      {/* Backdrop: now a DIV, not focusable */}
       <AnimatePresence>
         {menuOpen && (
-          <motion.button
-            aria-hidden
+          <motion.div
+            aria-hidden="true"
             onClick={() => setMenuOpen(false)}
-            className="fixed inset-0 z-[9998] bg-transparent"
+            className="fixed inset-0 z-50 bg-transparent"
             initial={{ opacity: 0 }}
             animate={{ opacity: 0 }}
             exit={{ opacity: 0 }}
@@ -61,8 +73,13 @@ export default function MessengerButton() {
       >
         {/* FAB (stays put) */}
         <button
+          ref={triggerRef}
+          type="button"
           onClick={toggleMenu}
           aria-label="Chat on Messenger"
+          aria-haspopup="menu"
+          aria-expanded={menuOpen}
+          aria-controls="messenger-menu"
           className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-gradient-to-tr from-blue-600 via-blue-500 to-blue-700 text-white shadow-[0_0_12px_#00000033,0_0_24px_#00000022] transition-transform duration-300 hover:scale-110 hover:shadow-[0_0_18px_#00000044,0_0_35px_#00000033] active:scale-95 dark:from-blue-400 dark:via-blue-300 dark:to-blue-400"
         >
           <FaFacebookMessenger className="h-6 w-6" />
@@ -72,6 +89,9 @@ export default function MessengerButton() {
         <AnimatePresence>
           {menuOpen && (
             <motion.div
+              id="messenger-menu"
+              role="menu"
+              aria-label="Messenger options"
               initial={{ opacity: 0, x: 12, scale: 0.98 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 12, scale: 0.98 }}
@@ -79,20 +99,25 @@ export default function MessengerButton() {
               className="absolute right-[calc(100%+0.5rem)] bottom-0 w-max overflow-hidden rounded-2xl border border-gray-200 bg-white/90 shadow-lg backdrop-blur-md dark:border-gray-700 dark:bg-neutral-800/90"
             >
               <button
+                ref={firstItemRef}
+                type="button"
+                role="menuitem"
                 onClick={() => {
                   openBrowserChat();
                   setMenuOpen(false);
                 }}
-                className="block cursor-pointer px-4 py-2 text-left text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700"
+                className="block w-full cursor-pointer px-4 py-2 text-left text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700"
               >
                 💬 Open in Browser
               </button>
               <button
+                type="button"
+                role="menuitem"
                 onClick={() => {
                   openMessengerLink();
                   setMenuOpen(false);
                 }}
-                className="block cursor-pointer px-4 py-2 text-left text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700"
+                className="block w-full cursor-pointer px-4 py-2 text-left text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700"
               >
                 🚀 Open in Messenger
               </button>
