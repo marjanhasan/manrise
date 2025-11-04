@@ -63,7 +63,7 @@ export default function MessengerButton() {
         <button
           onClick={toggleMenu}
           aria-label="Chat on Messenger"
-          className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-tr from-blue-600 via-blue-500 to-blue-700 text-white shadow-[0_0_12px_#00000033,0_0_24px_#00000022] transition-transform duration-300 hover:scale-110 hover:shadow-[0_0_18px_#00000044,0_0_35px_#00000033] active:scale-95 dark:from-blue-400 dark:via-blue-300 dark:to-blue-400"
+          className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-gradient-to-tr from-blue-600 via-blue-500 to-blue-700 text-white shadow-[0_0_12px_#00000033,0_0_24px_#00000022] transition-transform duration-300 hover:scale-110 hover:shadow-[0_0_18px_#00000044,0_0_35px_#00000033] active:scale-95 dark:from-blue-400 dark:via-blue-300 dark:to-blue-400"
         >
           <FaFacebookMessenger className="h-6 w-6" />
         </button>
@@ -83,7 +83,7 @@ export default function MessengerButton() {
                   openBrowserChat();
                   setMenuOpen(false);
                 }}
-                className="block px-4 py-2 text-left text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700"
+                className="block cursor-pointer px-4 py-2 text-left text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700"
               >
                 💬 Open in Browser
               </button>
@@ -92,7 +92,7 @@ export default function MessengerButton() {
                   openMessengerLink();
                   setMenuOpen(false);
                 }}
-                className="block px-4 py-2 text-left text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700"
+                className="block cursor-pointer px-4 py-2 text-left text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700"
               >
                 🚀 Open in Messenger
               </button>
