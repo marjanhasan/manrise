@@ -1,80 +1,78 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import Image, { StaticImageData } from "next/image";
 import { Star, Heart, ShoppingCart } from "lucide-react";
 import { useState } from "react";
-
-interface ProductCardProps {
-  imageFront: string | StaticImageData;
-  imageBack: string | StaticImageData;
-  title: string;
-  code: string;
-  price: number;
-  oldPrice: number;
-  rating: number;
-  reviews: number;
-}
+import { RelatedItem as ProductCardProps } from "@/types/product";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function ProductCard({
-  imageFront,
-  imageBack,
+  productId,
+  images,
   title,
   code,
   price,
-  oldPrice,
+  compareAtPrice,
   rating,
-  reviews,
+  reviewCount,
 }: ProductCardProps) {
   const [hovered, setHovered] = useState(false);
   const [wished, setWished] = useState(false);
 
   return (
-    <div
+    <Link
+      href={`/product/${productId}`}
       className="group cursor-pointer overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm transition-transform hover:-translate-y-1 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       {/* Image Section */}
-      <div className="relative aspect-[4/5] w-full">
-        {/* Main image */}
-        <Image
-          src={imageFront}
-          alt={title}
-          fill
-          className={`object-cover transition-opacity duration-500 ${
-            hovered ? "opacity-0" : "opacity-100"
-          }`}
-          sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-        />
-        {/* Hover image */}
-        <Image
-          src={imageBack}
-          alt={title}
-          fill
-          className={`absolute top-0 left-0 object-cover transition-opacity duration-500 ${
-            hovered ? "opacity-100" : "opacity-0"
-          }`}
-          sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-        />
+      <div className="relative aspect-[4/5] w-full overflow-hidden">
+        {/* Base image layer */}
+        <div
+          className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${hovered ? "opacity-0" : "opacity-100"}`}
+        >
+          <Image
+            src={images.front.src}
+            alt={title}
+            fill
+            className="pointer-events-none object-cover"
+            sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          />
+        </div>
 
-        {/* ⭐ Rating badge */}
-        <div className="absolute bottom-2 left-2 flex items-center gap-1 rounded-md bg-white/80 px-2 py-1 text-[clamp(10px,0.9vw,13px)] shadow-sm backdrop-blur-sm dark:bg-black/40">
+        {/* Hover image layer */}
+        <div
+          className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${hovered ? "opacity-100" : "opacity-0"}`}
+        >
+          <Image
+            src={images.back.src}
+            alt={title}
+            fill
+            className="pointer-events-none object-cover"
+            sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          />
+        </div>
+
+        {/* ⭐ Rating badge — keep above images */}
+        <div className="absolute bottom-2 left-2 z-30 flex items-center gap-1 rounded-md bg-white/80 px-2 py-1 text-[clamp(10px,0.9vw,13px)] shadow-sm backdrop-blur-sm dark:bg-black/40">
           <Star className="h-[clamp(12px,1vw,15px)] w-[clamp(12px,1vw,15px)] fill-yellow-400 text-yellow-400" />
           <span className="font-medium">{rating.toFixed(1)}</span>
           <span className="text-gray-500">
-            | {reviews.toString().padStart(2, "0")}
+            | {reviewCount.toString().padStart(2, "0")}
           </span>
         </div>
 
-        {/* ❤ Wishlist (top-right) */}
+        {/* ❤ Wishlist — keep above images */}
         <motion.button
           aria-label={wished ? "Remove from wishlist" : "Add to wishlist"}
           aria-pressed={wished}
           onClick={(e) => {
             e.stopPropagation();
+            e.preventDefault(); // prevents Link navigation when clicking the button
             setWished((v) => !v);
           }}
-          className="absolute top-2 right-2 grid h-[clamp(42px,5vw,50px)] w-[clamp(42px,5vw,50px)] place-items-center rounded-full text-gray-700 transition-transform duration-300 hover:scale-[1.1] active:scale-[0.95] dark:text-gray-200"
+          className="absolute top-2 right-2 z-30 grid h-[clamp(42px,5vw,50px)] w-[clamp(42px,5vw,50px)] place-items-center rounded-full text-gray-700 transition-transform duration-300 hover:scale-[1.1] active:scale-[0.95] dark:text-gray-200"
           whileTap={{ scale: 0.9 }}
         >
           <AnimatePresence mode="popLayout">
@@ -112,7 +110,7 @@ export default function ProductCard({
         <div className="flex items-center gap-1 text-[clamp(13px,1.2vw,16px)] font-semibold text-gray-800 dark:text-white">
           <span>TK. {price}</span>
           <span className="text-[clamp(10px,0.9vw,12px)] font-normal text-gray-400 line-through">
-            TK. {oldPrice}
+            TK. {compareAtPrice}
           </span>
         </div>
 
@@ -142,6 +140,6 @@ export default function ProductCard({
           </button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
