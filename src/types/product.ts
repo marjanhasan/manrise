@@ -19,14 +19,28 @@ export interface ProductVariant {
   compareAtPrice?: number;
   stock: number; // inventory for THIS variant
   inStock: boolean; // derived from stock > 0 when seeding
-  image?: UiImage; // optional variant-specific image
+  images: UiImage[]; // variant-specific images
+  createdAt?: string;
+  bestSeller: boolean;
+}
+
+export interface FabricAndFit {
+  fabric: string;
+  type: string;
+  weave: string;
+  texture: string;
+  breathability: string;
 }
 
 export interface Product {
   id: string; // stable handle
   title: string;
   code: string; // product-level code (shared by variants)
-  description?: string;
+  description: string;
+  sizeChart: [string[], string[], string[], string[]];
+  fabricAndFit: FabricAndFit;
+  specifications: string[];
+  careTips: string[];
 
   price: number; // base price (variants can override)
   compareAtPrice?: number;
@@ -34,7 +48,6 @@ export interface Product {
   rating: number; // 0–5
   reviewCount: number;
 
-  images: UiImage[];
   category?: string;
   tags?: string[];
 
@@ -42,8 +55,10 @@ export interface Product {
   variants: ProductVariant[];
 
   // Derived helpers
-  totalStock?: number; // sum of variants' stock
-  inStock?: boolean; // any variant inStock
+  totalStock: number; // sum of variants' stock
+  inStock: boolean; // any variant inStock
+
+  createdAt: string;
 }
 
 export interface RelatedItem {
@@ -60,62 +75,50 @@ export interface RelatedItem {
   };
 }
 
-/*
-export interface Product1 {
-  id: string;
-  title: string;
+/* ---------- NEW: per-size detail type used by AllProducts ---------- */
+export interface SizeVariant {
+  size: string;
+  sku: string;
+  stock: number;
+  inStock: boolean;
+  price?: number;
+  compareAtPrice?: number;
+  images: UiImage[]; // this size’s own images (often same as color)
+  createdAt?: string;
+  bestSeller?: boolean; // per-size flag
+}
+
+/* ---------- Flattened, color-scoped product used by the PDP/grid ---------- */
+export interface AllProducts {
+  productId: string; // e.g. `${product.id}-${color}`
+  title: string; // e.g. "Manrise ELITE — Black"
   code: string;
   description?: string;
-  price: number;
-  oldPrice?: number;
-  rating: number; // 0–5
-  reviewCount: number;
-  stock: number;
-  inStock: boolean;
-  colors: string[];
-  sizes: string[];
-  images: string[] | StaticImageData[];
-  category?: string;
-  tags?: string[];
-}
+  sizeChart: [string[], string[], string[], string[]];
+  fabricAndFit: FabricAndFit;
+  specifications: string[];
+  careTips: string[];
 
-export interface RelatedItem {
-  productId: string; // fk -> Product.id
-  href: string;
-  title: string;
-  code: string;
-  price: number;
+  color: string;
+  price: number; // color-level min price
   compareAtPrice?: number;
   rating: number;
   reviewCount: number;
-  images: {
-    front: UiImage;
-    back: UiImage;
-  };
-}
+  category?: string;
+  tags?: string[];
+  createdAt: string;
 
-export interface CartLineItem {
-  id: string;
-  productId: string;
-  title: string;
-  image: string | StaticImageData;
-  code: string;
-  price: number;
-  oldPrice?: number;
-  quantity: number;
-  stock: number;
-  inStock: boolean;
-}
+  // Color-level fields
+  sizes: string[]; // available sizes for this color
+  images: UiImage[]; // representative images for this color
+  sku: string; // canonical color SKU (first size)
+  stock: number; // total stock across sizes for this color
+  inStock: boolean; // any size in stock?
+  bestSeller: boolean;
 
-export interface RelatedItem1 {
-  productId: string;
-  title: string;
-  code: string;
-  price: number;
-  oldPrice?: number;
-  rating: number;
-  reviewCount: number;
-  imageFront: string | StaticImageData;
-  imageBack: string | StaticImageData;
+  // NEW: per-size inventory/pricing/images
+  sizeVariants: SizeVariant[];
+
+  // Optional quick lookup: { "38": 3, "40": 0, ... }
+  sizeStockBySize?: Record<string, number>;
 }
-*/
