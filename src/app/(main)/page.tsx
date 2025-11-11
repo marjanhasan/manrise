@@ -1,96 +1,15 @@
 import Banner from "@/components/Banner/Banner";
-import ProductCard from "@/components/ProductCard/ProductCard";
 import ServiceSection from "@/components/ServiceSection";
-import img1 from "../../../public/imageBack.webp";
-import img2 from "../../../public/imageFront.webp";
 import titleImage from "../../../public/banner1.png";
 import offerImage from "../../../public/banner2.png";
 import TitleImage from "@/components/TitleImage/TitleImage";
-
-const products = [
-  {
-    imageFront: img1,
-    imageBack: img2,
-    title: "Manfare ELITE Quality Panjabi",
-    code: "MP-242",
-    price: 2990,
-    oldPrice: 3750,
-    rating: 5.0,
-    reviews: 1,
-  },
-  {
-    imageFront: img1,
-    imageBack: img2,
-    title: "Manfare ELITE Quality Panjabi",
-    code: "MP-242",
-    price: 2990,
-    oldPrice: 3750,
-    rating: 5.0,
-    reviews: 1,
-  },
-  {
-    imageFront: img1,
-    imageBack: img2,
-    title: "Manfare ELITE Quality Panjabi",
-    code: "MP-242",
-    price: 2990,
-    oldPrice: 3750,
-    rating: 5.0,
-    reviews: 1,
-  },
-  {
-    imageFront: img1,
-    imageBack: img2,
-    title: "Manfare ELITE Quality Panjabi",
-    code: "MP-242",
-    price: 2990,
-    oldPrice: 3750,
-    rating: 5.0,
-    reviews: 1,
-  },
-  {
-    imageFront: img1,
-    imageBack: img2,
-    title: "Manfare ELITE Quality Panjabi",
-    code: "MP-242",
-    price: 2990,
-    oldPrice: 3750,
-    rating: 5.0,
-    reviews: 1,
-  },
-  {
-    imageFront: img1,
-    imageBack: img2,
-    title: "Manfare ELITE Quality Panjabi",
-    code: "MP-242",
-    price: 2990,
-    oldPrice: 3750,
-    rating: 5.0,
-    reviews: 1,
-  },
-  {
-    imageFront: img1,
-    imageBack: img2,
-    title: "Manfare ELITE Quality Panjabi",
-    code: "MP-242",
-    price: 2990,
-    oldPrice: 3750,
-    rating: 5.0,
-    reviews: 1,
-  },
-  {
-    imageFront: img1,
-    imageBack: img2,
-    title: "Manfare ELITE Quality Panjabi",
-    code: "MP-242",
-    price: 2990,
-    oldPrice: 3750,
-    rating: 5.0,
-    reviews: 1,
-  },
-];
+import { ALL_PRODUCTS } from "@/data/dummy";
+import RelatedProducts from "@/components/ui/RelatedProducts";
 
 export default function Home() {
+  const latestProducts = ALL_PRODUCTS.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  ).slice(0, 4);
   return (
     <div>
       <Banner />
@@ -104,21 +23,7 @@ export default function Home() {
         ctaText="Shop Now"
       />
       <div className="mx-auto max-w-7xl px-4 py-10">
-        <div className="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {products.map((p, i) => (
-            <ProductCard
-              key={i}
-              imageFront={p.imageFront}
-              imageBack={p.imageBack}
-              title={p.title}
-              code={p.code}
-              price={p.price}
-              oldPrice={p.oldPrice}
-              rating={p.rating}
-              reviews={p.reviews}
-            />
-          ))}
-        </div>
+        <RelatedProducts products={latestProducts} />
       </div>
       <TitleImage
         backgroundImage={offerImage}
@@ -129,11 +34,7 @@ export default function Home() {
         ctaText="Shop Now"
       />
       <div className="mx-auto max-w-7xl px-4 py-10">
-        <div className="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {products.map((p, i) => (
-            <ProductCard key={i} {...p} />
-          ))}
-        </div>
+        <RelatedProducts products={ALL_PRODUCTS.slice(4, 8)} />
       </div>
     </div>
   );
