@@ -19,7 +19,7 @@ const banners = [
     title: "Discover the Latest Trends",
     subtitle: "Elevate your lifestyle with premium products.",
     buttonText: "Shop Now",
-    buttonLink: "/shop",
+    buttonLink: "/collections",
   },
   {
     id: 2,
@@ -35,7 +35,7 @@ const banners = [
     title: "Premium Style for Everyone",
     subtitle: "Get exclusive deals and free shipping nationwide.",
     buttonText: "Start Shopping",
-    buttonLink: "/offers",
+    buttonLink: "/collections",
   },
 ];
 

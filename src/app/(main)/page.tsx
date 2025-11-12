@@ -19,7 +19,7 @@ export default function Home() {
         title="Latest Collections"
         subtitle="24/7 services available"
         textAlign="text-center"
-        ctaLink="/auth"
+        ctaLink="/collections"
         ctaText="Shop Now"
       />
       <div className="mx-auto max-w-7xl px-4 py-10">
@@ -30,7 +30,7 @@ export default function Home() {
         title="Eid Offers for 2k26"
         subtitle="Get up to 50% off on selected items"
         textAlign="text-center"
-        ctaLink="/auth"
+        ctaLink="/collections"
         ctaText="Shop Now"
       />
       <div className="mx-auto max-w-7xl px-4 py-10">
