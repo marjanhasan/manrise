@@ -120,6 +120,7 @@ export default function ProductDetailsPage({ params }: PageProps) {
         <div className="space-y-6">
           <ProductHeader
             title={product.title}
+            bestSeller={product.bestSeller}
             rating={product.reviewCount ? product.rating : 0}
             reviewCount={product.reviewCount}
             price={formatBDT.format(unitPrice)}
@@ -205,7 +206,7 @@ export default function ProductDetailsPage({ params }: PageProps) {
         <RelatedProducts
           products={ALL_PRODUCTS.filter(
             (p) => p.code === product.code && p.sku !== product.sku,
-          )}
+          ).slice(0, 4)}
         />
       </section>
 
@@ -213,7 +214,10 @@ export default function ProductDetailsPage({ params }: PageProps) {
       <section className="mt-14">
         <SectionTitle title="YOU MAY ALSO LIKE" />
         <RelatedProducts
-          products={ALL_PRODUCTS.filter((p) => p.code !== product.code)}
+          products={ALL_PRODUCTS.filter((p) => p.code !== product.code).slice(
+            0,
+            4,
+          )}
         />
       </section>
     </main>

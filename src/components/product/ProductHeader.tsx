@@ -8,9 +8,11 @@ type HeaderProps = {
   reviewCount: number;
   price: string;
   compareAt?: string;
+  bestSeller: boolean;
 };
 export default function ProductHeader({
   title,
+  bestSeller,
   rating,
   reviewCount,
   price,
@@ -49,6 +51,11 @@ export default function ProductHeader({
         <span className="text-sm text-neutral-600 dark:text-neutral-300">
           {rating.toFixed(1)} | {reviewCount} Reviews
         </span>
+        {bestSeller && (
+          <span className="cursor-pointer rounded-full border border-transparent bg-gradient-to-tr from-gray-700 via-gray-500 to-gray-700 px-2 py-0.5 text-xs font-semibold text-white transition-all duration-300 dark:from-gray-200 dark:via-gray-400 dark:to-gray-200 dark:text-black">
+            Best Seller
+          </span>
+        )}
       </div>
 
       <div className="flex items-end gap-3">
