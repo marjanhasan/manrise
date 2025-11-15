@@ -59,7 +59,7 @@ export default function MessengerButton() {
           <motion.div
             aria-hidden="true"
             onClick={() => setMenuOpen(false)}
-            className="fixed inset-0 z-50 bg-transparent"
+            className="fixed inset-0 z-30 bg-transparent"
             initial={{ opacity: 0 }}
             animate={{ opacity: 0 }}
             exit={{ opacity: 0 }}
@@ -69,7 +69,7 @@ export default function MessengerButton() {
 
       <div
         ref={wrapperRef}
-        className="fixed right-[max(1rem,calc((100vw-1600px)/2+1.5rem))] bottom-20 z-[9999] md:bottom-5"
+        className="fixed right-[max(1rem,calc((100vw-1600px)/2+1.5rem))] bottom-20 z-30 md:bottom-5"
       >
         {/* FAB (stays put) */}
         <button
