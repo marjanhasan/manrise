@@ -52,7 +52,7 @@ export default function ProductHeader({
           {rating.toFixed(1)} | {reviewCount} Reviews
         </span>
         {bestSeller && (
-          <span className="cursor-pointer rounded-full border border-transparent bg-gradient-to-tr from-gray-700 via-gray-500 to-gray-700 px-2 py-0.5 text-xs font-semibold text-white transition-all duration-300 dark:from-gray-200 dark:via-gray-400 dark:to-gray-200 dark:text-black">
+          <span className="cursor-pointer rounded-full border border-transparent bg-gradient-to-tr from-gray-700 via-gray-500 to-gray-700 px-2 py-0.5 text-xs font-semibold whitespace-nowrap text-white transition-all duration-300 dark:from-gray-200 dark:via-gray-400 dark:to-gray-200 dark:text-black">
             Best Seller
           </span>
         )}
