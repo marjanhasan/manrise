@@ -133,10 +133,10 @@ export default function Drawer({
           isOpen ? toClass : fromClass,
         )}
       >
-        <div className="relative h-full p-4">
+        <div className="relative h-full">
           {closeButton}
           {title && (
-            <h2 id="drawer-title" className="mb-4 text-lg font-bold">
+            <h2 id="drawer-title" className="mb-4 pt-5 pl-4 text-lg font-bold">
               {title}
             </h2>
           )}
