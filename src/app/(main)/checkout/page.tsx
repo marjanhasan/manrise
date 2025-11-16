@@ -1,4 +1,5 @@
 "use client";
+import PurchaseStatusModal from "@/components/ui/PurchaseStatusModal";
 import React, { useState } from "react";
 
 export default function CheckoutPage() {
@@ -10,6 +11,8 @@ export default function CheckoutPage() {
   const [payment, setPayment] = useState<"cod" | "online">("cod");
   const [coupon, setCoupon] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+  const [status, setStatus] = useState(true); // success or failure
 
   const product = {
     title: "ELITE Quality Embroidered Panjabi",
@@ -119,15 +122,12 @@ export default function CheckoutPage() {
                 <div className="mb-2 text-sm font-medium">
                   Select delivery area <span className="text-red-500">*</span>
                 </div>
-                <div className="flex items-center gap-3">
+
+                <div className="flex flex-wrap items-center gap-2">
                   <button
                     type="button"
                     onClick={() => setArea("inside")}
-                    className={`cursor-pointer rounded-full border px-3 py-2 transition ${
-                      area === "inside"
-                        ? "border-teal-400 bg-teal-100"
-                        : "border-gray-300"
-                    }`}
+                    className={`/* smaller on mobile */ /* smaller padding on mobile */ /* normal size on larger screens */ /* prevents stretching */ flex-shrink-0 rounded-full border px-2 py-1 text-sm transition sm:px-3 sm:py-2 ${area === "inside" ? "border-teal-400 bg-teal-100" : "border-gray-300"} `}
                   >
                     Inside Dhaka
                   </button>
@@ -135,11 +135,7 @@ export default function CheckoutPage() {
                   <button
                     type="button"
                     onClick={() => setArea("outside")}
-                    className={`cursor-pointer rounded-full border px-3 py-2 transition ${
-                      area === "outside"
-                        ? "border-teal-400 bg-teal-100"
-                        : "border-gray-300"
-                    }`}
+                    className={`flex-shrink-0 rounded-full border px-2 py-1 text-sm transition sm:px-3 sm:py-2 ${area === "outside" ? "border-teal-400 bg-teal-100" : "border-gray-300"} `}
                   >
                     Outside Dhaka
                   </button>
@@ -209,21 +205,24 @@ export default function CheckoutPage() {
                 <label className="text-sm font-medium">
                   Have a coupon or promo code?
                 </label>
-                <div className="mt-2 flex gap-2">
+
+                <div className="mt-2 flex flex-wrap gap-2">
                   <input
                     value={coupon}
                     onChange={(e) => setCoupon(e.target.value)}
                     placeholder="Enter coupon"
-                    className="flex-1 rounded border px-3 py-2"
+                    className="min-w-0 flex-1 rounded border px-2 py-1 text-sm sm:px-3 sm:py-2 sm:text-base"
                   />
+
                   <button
                     type="button"
                     onClick={applyCoupon}
-                    className="rounded border px-3 py-2"
+                    className="flex-shrink-0 rounded border px-2 py-1 text-sm sm:px-3 sm:py-2 sm:text-base"
                   >
                     Apply
                   </button>
                 </div>
+
                 {appliedCoupon && (
                   <div className="mt-2 text-sm text-green-600">
                     Coupon {appliedCoupon} applied
@@ -250,7 +249,30 @@ export default function CheckoutPage() {
                 Place Order
               </button>
             </div>
+            <PurchaseStatusModal
+              open={open}
+              onClose={() => setOpen(false)}
+              success={status}
+            />
           </aside>
+          {/* <button
+            className="cursor-pointer items-center justify-center rounded-full bg-gray-200 text-gray-700 shadow-sm transition hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600"
+            onClick={() => {
+              setStatus(true);
+              setOpen(true);
+            }}
+          >
+            Simulate Success
+          </button>
+          <button
+            className="cursor-pointer items-center justify-center rounded-full bg-gray-200 text-gray-700 shadow-sm transition hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600"
+            onClick={() => {
+              setStatus(false);
+              setOpen(true);
+            }}
+          >
+            Simulate Failure
+          </button> */}
         </div>
       </div>
     </div>
