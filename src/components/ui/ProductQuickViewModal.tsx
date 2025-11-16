@@ -246,7 +246,7 @@ export default function ProductQuickViewModal({ open, onClose, slug }: Props) {
         <button
           aria-label="Close"
           onClick={onClose}
-          className="absolute top-3 right-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 text-gray-700 shadow-sm transition hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600"
+          className="absolute top-3 right-3 z-20 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-gray-200 text-gray-700 shadow-sm transition hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600"
         >
           <X className="h-4 w-4" />
         </button>
