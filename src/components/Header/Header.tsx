@@ -3,12 +3,15 @@ import { useState } from "react";
 import Drawer from "@/components/ui/Drawer";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
-import IconButton from "@/components/ui/IconButton";
 import { X } from "lucide-react";
+import CartDrawerContent from "../cart/CartDrawerContent";
+import { CART_ITEMS as items } from "@/data/cart";
+import ProductQuickViewModal from "../ui/ProductQuickViewModal";
 
 export default function Header() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <nav className="bg-accent sticky top-0 z-40 shadow-md">
@@ -29,27 +32,35 @@ export default function Header() {
         widthClass="w-64 lg:w-80 2xl:w-96"
         title="Shopping Cart"
         closeButton={
-          <IconButton
-            className="absolute top-4 right-4"
-            aria-label="Close cart"
+          <button
+            aria-label="Close Cart"
             onClick={() => setIsCartOpen(false)}
+            className="absolute top-4 right-4 z-20 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-gray-200 text-gray-700 shadow-sm transition hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600"
           >
-            <X />
-          </IconButton>
+            <X className="h-4 w-4" />
+          </button>
         }
       >
-        {/* Replace placeholders with real cart line items */}
-        <ul className="space-y-2">
-          <li>Your cart has 2 items.</li>
-          <li className="flex justify-between border-b py-2">
-            <span>Product Name 1</span>
-            <span>$99</span>
-          </li>
-          <li className="flex justify-between border-b py-2">
-            <span>Product Name 2</span>
-            <span>$49</span>
-          </li>
-        </ul>
+        <CartDrawerContent
+          items={items}
+          onRemove={(id) => {
+            /* remove from store */
+          }}
+          onUpdateQuantity={(id, qty) => {
+            /* update in store */
+          }}
+          onCheckout={() => {
+            /* route to /checkout */
+            setOpen((prev) => !prev);
+          }}
+          onApplyCode={async (code) => {
+            /* apply coupon */
+          }}
+          shipping={null} // "FREE" | number | null
+          tax={null} // number | null
+          discount={null} // number | null
+          content="cart"
+        />
       </Drawer>
 
       {/* Wishlist Drawer */}
@@ -60,28 +71,36 @@ export default function Header() {
         widthClass="w-64 lg:w-80 2xl:w-96"
         title="Wishlist"
         closeButton={
-          <IconButton
-            className="absolute top-4 right-4"
+          <button
             aria-label="Close wishlist"
             onClick={() => setIsWishlistOpen(false)}
+            className="absolute top-4 right-4 z-20 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-gray-200 text-gray-700 shadow-sm transition hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600"
           >
-            <X />
-          </IconButton>
+            <X className="h-4 w-4" />
+          </button>
         }
       >
-        {/* Replace placeholders with real wishlist items */}
-        <ul className="space-y-2">
-          <li>Your wishlist has 2 items.</li>
-          <li className="flex justify-between border-b py-2">
-            <span>Product Name 1</span>
-            <span>$99</span>
-          </li>
-          <li className="flex justify-between border-b py-2">
-            <span>Product Name 2</span>
-            <span>$49</span>
-          </li>
-        </ul>
+        <CartDrawerContent
+          items={items}
+          onRemove={(id) => {
+            /* remove from store */
+          }}
+          onUpdateQuantity={(id, qty) => {
+            /* update in store */
+          }}
+          onCheckout={() => {
+            /* route to /checkout */
+          }}
+          onApplyCode={async (code) => {
+            /* apply coupon */
+          }}
+          shipping={null} // "FREE" | number | null
+          tax={null} // number | null
+          discount={null} // number | null
+          content="wishlist"
+        />
       </Drawer>
+      <ProductQuickViewModal open={open} onClose={() => setOpen(false)} />
     </nav>
   );
 }

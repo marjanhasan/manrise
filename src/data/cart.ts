@@ -14,7 +14,7 @@ export const CART_ITEMS: CartLineItem[] = [
     price: firstVariant.price ?? PRODUCTS[0].price,
     compareAtPrice: firstVariant.compareAtPrice ?? PRODUCTS[0].compareAtPrice,
     quantity: 2,
-    image: PRODUCTS[0].images[0],
+    image: PRODUCTS[0].variants[0].images[0],
     stock: firstVariant.inStock,
     maxQuantity: 5,
   },
