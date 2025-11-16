@@ -36,13 +36,13 @@ export default function MobileNav({ onOpenCart }: MobileNavProps) {
         widthClass="w-64"
         title="Menu"
         closeButton={
-          <IconButton
-            className="absolute top-4 right-4"
+          <button
             aria-label="Close menu"
             onClick={() => setIsMenuOpen(false)}
+            className="absolute top-4 right-4 z-20 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-gray-200 text-gray-700 shadow-sm transition hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600"
           >
-            <X />
-          </IconButton>
+            <X className="h-4 w-4" />
+          </button>
         }
       >
         <nav>
