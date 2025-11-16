@@ -68,14 +68,14 @@ export default function PurchaseStatusModal({
 
         <p className="mt-2 text-sm text-gray-600">
           {success
-            ? "Thank you! Your transaction was completed successfully."
+            ? "Thank you! Your order placed successfully."
             : "Something went wrong while processing your purchase."}
         </p>
 
         {/* Action button */}
         <button
           onClick={onClose}
-          className={`mt-6 w-full rounded-md px-4 py-2 text-sm font-medium text-white shadow ${
+          className={`mt-6 w-full cursor-pointer rounded-md px-4 py-2 text-sm font-medium text-white shadow ${
             success
               ? "bg-green-600 hover:bg-green-700"
               : "bg-red-600 hover:bg-red-700"
