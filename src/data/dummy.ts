@@ -1,6 +1,97 @@
-// src/data/dummy.ts
 import { AllProducts, Product, ProductVariant, UiImage } from "@/types/product";
-import { buildVariants, deriveInventory } from "@/utils/variants";
+
+export function makeSku(productCode: string, color: string, size: string) {
+  const c = color.replace(/\s+/g, "").slice(0, 3).toUpperCase(); // Black -> BLA
+  const s = size.toUpperCase();
+  return `${productCode}-${c}-${s}`; // e.g. MP-242-BLA-40
+}
+
+type StockInput =
+  | number
+  | ((ctx: {
+      productCode: string;
+      color: string;
+      size: string;
+      sku: string;
+      index: number; // running index across all variants
+    }) => number);
+
+type ImagesInput =
+  | UiImage[]
+  | ((ctx: {
+      productCode: string;
+      color: string;
+      size: string;
+      sku: string;
+      index: number;
+    }) => UiImage[]);
+
+type VariantDefaults = {
+  stock?: StockInput; // NEW: can be number OR function
+  price?: number;
+  compareAtPrice?: number;
+  image?: UiImage; // legacy single image (unused if images provided)
+  images?: ImagesInput; // preferred: array or resolver
+  createdAt?: string | (() => string);
+};
+
+export function buildVariants(
+  productCode: string,
+  colors: string[],
+  sizes: string[],
+  defaults: VariantDefaults = {},
+): ProductVariant[] {
+  const rows: ProductVariant[] = [];
+  let index = 0;
+
+  const getCreatedAt = () =>
+    typeof defaults.createdAt === "function"
+      ? defaults.createdAt()
+      : defaults.createdAt;
+
+  for (const color of colors) {
+    for (const size of sizes) {
+      const sku = makeSku(productCode, color, size);
+
+      const stock =
+        typeof defaults.stock === "function"
+          ? Math.max(
+              0,
+              Math.floor(
+                defaults.stock({ productCode, color, size, sku, index }),
+              ),
+            )
+          : Math.max(0, Math.floor(defaults.stock ?? 0));
+
+      const images =
+        typeof defaults.images === "function"
+          ? defaults.images({ productCode, color, size, sku, index })
+          : (defaults.images ?? (defaults.image ? [defaults.image] : []));
+
+      rows.push({
+        id: sku,
+        sku,
+        title: `${color} / ${size}`,
+        optionValues: { Color: color, Size: size },
+        price: defaults.price,
+        compareAtPrice: defaults.compareAtPrice,
+        stock,
+        inStock: stock > 0,
+        images,
+        createdAt: getCreatedAt(),
+        bestSeller: false,
+      });
+
+      index++;
+    }
+  }
+  return rows;
+}
+
+export function deriveInventory(product: Pick<Product, "variants">) {
+  const total = product.variants.reduce((n, v) => n + v.stock, 0);
+  return { totalStock: total, inStock: total > 0 } as const;
+}
 
 /* -------------------------------- Types --------------------------------- */
 
@@ -55,17 +146,16 @@ const IMG = (src: string, alt = "product img"): UiImage => ({ src, alt });
 const COLORS = ["Black", "Navy", "Olive", "White"] as const;
 const SIZES = ["38", "40", "42", "44"] as const;
 
-const q = "?q=80&w=1200&auto=format&fit=crop";
 const BASES = {
-  A: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246",
-  B: "https://images.unsplash.com/photo-1516826957135-700dedea698c",
-  C: "https://images.unsplash.com/photo-1520975916090-3105956dac38",
-  D: "https://images.unsplash.com/photo-1490111718993-d98654ce6cf7",
+  A: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=1200&auto=format&fit=crop",
+  B: "https://images.unsplash.com/photo-1516826957135-700dedea698c?q=80&w=1200&auto=format&fit=crop",
+  C: "https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200&auto=format&fit=crop",
+  D: "https://images.unsplash.com/photo-1490111718993-d98654ce6cf7?q=80&w=1200&auto=format&fit=crop",
 };
 
 const imgPair = (front: string, back: string, label: string): UiImage[] => [
-  IMG(`${front}${q}`, `${label} — front`),
-  IMG(`${back}${q}`, `${label} — back`),
+  IMG(`${front}`, `${label} — front`),
+  IMG(`${back}`, `${label} — back`),
 ];
 
 const imagesForMP242 = ({ color }: { color: string }) => {
